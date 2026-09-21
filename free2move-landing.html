@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carsharing en Madrid por minutos · Free2Move</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: #F8FAFC; color: #1a1a2e; line-height: 1.5; }
+    .lp-nav { display: flex; justify-content: space-between; align-items: center; padding: 14px 32px; border-bottom: 1px solid #e5e7eb; background: #fff; position: sticky; top: 0; z-index: 10; }
+    .lp-logo { display: flex; align-items: center; gap: 10px; }
+    .lp-logo-mark { width: 34px; height: 34px; border-radius: 50%; border: 3px solid #2E1065; display: flex; align-items: center; justify-content: center; }
+    .lp-logo-inner { width: 14px; height: 14px; border-radius: 50%; border: 2.5px solid #2E1065; }
+    .lp-logo-text { font-size: 17px; font-weight: 600; color: #2E1065; letter-spacing: -0.02em; }
+    .lp-nav-links { display: flex; gap: 24px; }
+    .lp-nav-link { font-size: 13px; color: #6b7280; text-decoration: none; font-weight: 500; }
+    .lp-nav-cta { font-size: 13px; font-weight: 600; background: #7C3AED; color: #fff; padding: 9px 20px; border-radius: 999px; border: none; cursor: pointer; }
+    .lp-hero { background: #2E1065; padding: 56px 32px 48px; text-align: center; }
+    .lp-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; color: #00F5FF; background: rgba(0,245,255,0.12); border: 1px solid rgba(0,245,255,0.3); padding: 5px 16px; border-radius: 999px; margin-bottom: 18px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .lp-h1 { font-size: 40px; font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 14px; }
+    .lp-h1 span { color: #A78BFA; }
+    .lp-sub { font-size: 16px; color: #C4B5FD; line-height: 1.65; max-width: 500px; margin: 0 auto 28px; }
+    .lp-cta-btn { display: inline-block; background: #7C3AED; color: #fff; font-size: 15px; font-weight: 600; padding: 14px 32px; border-radius: 999px; border: 2px solid #A78BFA; cursor: pointer; margin-bottom: 10px; }
+    .lp-cta-note { font-size: 12px; color: #A78BFA; }
+    .lp-trust { display: flex; justify-content: center; gap: 32px; padding: 18px 32px; border-bottom: 1px solid #e5e7eb; background: #fff; flex-wrap: wrap; }
+    .lp-trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #4b5563; font-weight: 500; }
+    .lp-trust-dot { width: 8px; height: 8px; border-radius: 50%; background: #7C3AED; }
+    .lp-section { padding: 40px 32px; border-bottom: 1px solid #e5e7eb; background: #fff; }
+    .lp-section:nth-child(even) { background: #F8FAFC; }
+    .lp-h2 { font-size: 22px; font-weight: 700; margin-bottom: 20px; color: #2E1065; }
+    .lp-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+    .lp-step { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; }
+    .lp-step-num { width: 32px; height: 32px; border-radius: 50%; background: #EDE9FE; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #5B21B6; margin-bottom: 12px; }
+    .lp-step-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #1f2937; }
+    .lp-step-sub { font-size: 13px; color: #6b7280; line-height: 1.55; }
+    .lp-sim { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 24px; max-width: 560px; }
+    .lp-sim-label { font-size: 13px; color: #6b7280; margin-bottom: 10px; font-weight: 500; }
+    .lp-sim-row { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+    .lp-sim-row input[type=range] { flex: 1; accent-color: #7C3AED; }
+    .lp-sim-row span { font-size: 15px; font-weight: 600; color: #2E1065; min-width: 60px; }
+    .lp-sim-result { background: #EDE9FE; border-radius: 12px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .lp-sim-result-label { font-size: 13px; color: #5B21B6; font-weight: 500; }
+    .lp-sim-result-value { font-size: 28px; font-weight: 700; color: #3C3489; }
+    .lp-sim-footnote { font-size: 11px; color: #9ca3af; margin-top: 10px; }
+    .lp-compare { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .lp-compare-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 18px; text-align: center; }
+    .lp-compare-card.featured { border: 2px solid #7C3AED; }
+    .lp-compare-badge { font-size: 11px; font-weight: 600; background: #EDE9FE; color: #5B21B6; padding: 4px 12px; border-radius: 999px; display: inline-block; margin-bottom: 10px; }
+    .lp-compare-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #1f2937; }
+    .lp-compare-price { font-size: 22px; font-weight: 700; color: #7C3AED; margin-bottom: 4px; }
+    .lp-compare-price.muted { color: #9ca3af; }
+    .lp-compare-note { font-size: 11px; color: #9ca3af; margin-bottom: 10px; }
+    .lp-compare-row { font-size: 12px; color: #6b7280; padding: 5px 0; border-top: 1px solid #f3f4f6; text-align: left; display: flex; align-items: center; gap: 6px; }
+    .check { color: #7C3AED; font-weight: 700; }
+    .lp-reviews { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+    .lp-review { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 18px; }
+    .lp-stars { color: #F59E0B; font-size: 14px; margin-bottom: 8px; }
+    .lp-review-text { font-size: 13px; color: #4b5563; line-height: 1.55; margin-bottom: 10px; font-style: italic; }
+    .lp-review-author { font-size: 12px; font-weight: 600; color: #2E1065; }
+    .lp-zones-box { background: #EDE9FE; border-radius: 16px; padding: 20px; text-align: center; }
+    .lp-zones-sub { font-size: 13px; color: #5B21B6; margin-bottom: 12px; font-weight: 500; }
+    .lp-zones-map { width: 100%; height: 100px; background: #fff; border-radius: 12px; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #9ca3af; gap: 8px; }
+    .lp-faq { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; }
+    .lp-faq-item { padding: 16px 20px; border-bottom: 1px solid #f3f4f6; }
+    .lp-faq-item:last-child { border-bottom: none; }
+    .lp-faq-q { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; color: #1f2937; }
+    .lp-faq-q span { color: #7C3AED; font-size: 18px; font-weight: 400; }
+    .lp-faq-a { font-size: 13px; color: #6b7280; margin-top: 8px; line-height: 1.6; }
+    .lp-footer-cta { background: #2E1065; padding: 48px 32px; text-align: center; }
+    .lp-footer-cta h2 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .lp-footer-cta p { font-size: 15px; color: #C4B5FD; margin-bottom: 24px; }
+    .lp-footer-note { font-size: 12px; color: #A78BFA; margin-top: 10px; }
+    footer { background: #1a1a2e; padding: 20px 32px; text-align: center; font-size: 12px; color: #6b7280; }
+    @media (max-width: 600px) {
+      .lp-nav-links { display: none; }
+      .lp-h1 { font-size: 28px; }
+      .lp-compare { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="lp-nav">
+    <div class="lp-logo">
+      <div class="lp-logo-mark"><div class="lp-logo-inner"></div></div>
+      <span class="lp-logo-text">Free2move</span>
+    </div>
+    <div class="lp-nav-links">
+      <a class="lp-nav-link" href="#">¿Cómo funciona?</a>
+      <a class="lp-nav-link" href="#">Zonas</a>
+      <a class="lp-nav-link" href="#">Precios</a>
+    </div>
+    <button class="lp-nav-cta">Descarga la app</button>
+  </nav>
+
+  <section class="lp-hero">
+    <div class="lp-eyebrow">Carsharing en Madrid</div>
+    <h1 class="lp-h1">Movilidad flexible<br><span>cuando la necesitas</span></h1>
+    <p class="lp-sub">Alquila un coche por minutos en Madrid. Sin parking, sin seguro, sin compromisos. Solo abre la app y conduce.</p>
+    <button class="lp-cta-btn">Descarga la app y consigue 10€ en tu primer trayecto</button>
+    <div class="lp-cta-note">Disponible en App Store y Google Play · Sin permanencia</div>
+  </section>
+
+  <div class="lp-trust">
+    <div class="lp-trust-item"><div class="lp-trust-dot"></div>+50.000 usuarios en Madrid</div>
+    <div class="lp-trust-item"><div class="lp-trust-dot"></div>Coches 100% eléctricos</div>
+    <div class="lp-trust-item"><div class="lp-trust-dot"></div>Sin cuota mensual</div>
+    <div class="lp-trust-item"><div class="lp-trust-dot"></div>Seguro incluido</div>
+  </div>
+
+  <section class="lp-section">
+    <h2 class="lp-h2">¿Cómo funciona Free2Move en Madrid?</h2>
+    <div class="lp-steps">
+      <div class="lp-step">
+        <div class="lp-step-num">1</div>
+        <div class="lp-step-title">Descarga la app</div>
+        <div class="lp-step-sub">Regístrate en menos de 3 minutos con tu carnet y tarjeta</div>
+      </div>
+      <div class="lp-step">
+        <div class="lp-step-num">2</div>
+        <div class="lp-step-title">Encuentra un coche</div>
+        <div class="lp-step-sub">Ve los coches disponibles cerca de ti en tiempo real</div>
+      </div>
+      <div class="lp-step">
+        <div class="lp-step-num">3</div>
+        <div class="lp-step-title">Abre y conduce</div>
+        <div class="lp-step-sub">Abre el coche desde la app. Sin llaves, sin papeleos</div>
+      </div>
+      <div class="lp-step">
+        <div class="lp-step-num">4</div>
+        <div class="lp-step-title">Aparca y listo</div>
+        <div class="lp-step-sub">Deja el coche en cualquier punto de la zona de Madrid</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section">
+    <h2 class="lp-h2">Calcula cuánto te costaría tu trayecto</h2>
+    <div class="lp-sim">
+      <div class="lp-sim-label">Minutos estimados de viaje</div>
+      <div class="lp-sim-row">
+        <input type="range" min="5" max="90" value="20" id="mins" step="1">
+        <span id="mins-out">20 min</span>
+      </div>
+      <div class="lp-sim-result">
+        <span class="lp-sim-result-label">Coste estimado</span>
+        <span class="lp-sim-result-value" id="price-out">3,60€</span>
+      </div>
+      <div class="lp-sim-footnote">Tarifa base orientativa · 0,18€/min · precio final en la app</div>
+    </div>
+  </section>
+
+  <section class="lp-section">
+    <h2 class="lp-h2">Carsharing vs taxi vs transporte público</h2>
+    <div class="lp-compare">
+      <div class="lp-compare-card featured">
+        <div class="lp-compare-badge">Recomendado</div>
+        <div class="lp-compare-title">Free2Move</div>
+        <div class="lp-compare-price">0,18€/min</div>
+        <div class="lp-compare-note">Sin esperas · flexible</div>
+        <div class="lp-compare-row"><span class="check">+</span> Sin parking</div>
+        <div class="lp-compare-row"><span class="check">+</span> 100% eléctrico</div>
+        <div class="lp-compare-row"><span class="check">+</span> Seguro incluido</div>
+      </div>
+      <div class="lp-compare-card">
+        <div style="height:26px;"></div>
+        <div class="lp-compare-title">Taxi / VTC</div>
+        <div class="lp-compare-price muted">~12€</div>
+        <div class="lp-compare-note">Trayecto medio Madrid</div>
+        <div class="lp-compare-row" style="color:#d1d5db;">— Depende del conductor</div>
+        <div class="lp-compare-row" style="color:#d1d5db;">— Precio variable</div>
+        <div class="lp-compare-row" style="color:#d1d5db;">— Sin control del coche</div>
+      </div>
+      <div class="lp-compare-card">
+        <div style="height:26px;"></div>
+        <div class="lp-compare-title">Transporte público</div>
+        <div class="lp-compare-price muted">1,50€</div>
+        <div class="lp-compare-note">Pero sin flexibilidad</div>
+        <div class="lp-compare-row" style="color:#d1d5db;">— Horarios fijos</div>
+        <div class="lp-compare-row" style="color:#d1d5db;">— Sin puerta a puerta</div>
+        <div class="lp-compare-row" style="color:#d1d5db;">— Sin opciones nocturnas</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section">
+    <h2 class="lp-h2">Lo que dicen nuestros usuarios</h2>
+    <div class="lp-reviews">
+      <div class="lp-review">
+        <div class="lp-stars">★★★★★</div>
+        <div class="lp-review-text">"Perfecto para ir al trabajo sin preocuparme del parking. Lo uso casi todos los días."</div>
+        <div class="lp-review-author">Carlos M. · Madrid</div>
+      </div>
+      <div class="lp-review">
+        <div class="lp-stars">★★★★★</div>
+        <div class="lp-review-text">"Me ahorré un taxi de 15€. El registro tardó 3 minutos y el primer viaje fue genial."</div>
+        <div class="lp-review-author">Laura G. · Madrid</div>
+      </div>
+      <div class="lp-review">
+        <div class="lp-stars">★★★★☆</div>
+        <div class="lp-review-text">"Ideal para fines de semana. Siempre encuentro coche cerca de casa y es muy fácil de usar."</div>
+        <div class="lp-review-author">Miguel A. · Madrid</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section">
+    <h2 class="lp-h2">Zonas disponibles en Madrid</h2>
+    <div class="lp-zones-box">
+      <div class="lp-zones-sub">Zona de operación · más de 500 coches disponibles</div>
+      <div class="lp-zones-map">
+        📍 Mapa interactivo de zonas · Madrid centro y extrarradio
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section">
+    <h2 class="lp-h2">Preguntas frecuentes</h2>
+    <div class="lp-faq">
+      <div class="lp-faq-item">
+        <div class="lp-faq-q">¿Necesito dejar el coche en un sitio concreto? <span>+</span></div>
+        <div class="lp-faq-a">No. Puedes aparcar en cualquier punto dentro de la zona de operación de Madrid sin coste adicional.</div>
+      </div>
+      <div class="lp-faq-item">
+        <div class="lp-faq-q">¿El seguro está incluido? <span>+</span></div>
+        <div class="lp-faq-a">Sí. Cada viaje incluye seguro a todo riesgo. No necesitas contratar nada adicional.</div>
+      </div>
+      <div class="lp-faq-item">
+        <div class="lp-faq-q">¿Cuánto tarda el registro? <span>+</span></div>
+        <div class="lp-faq-a">Menos de 3 minutos con tu carnet de conducir y una tarjeta. Puedes hacerlo con tu cuenta de Google.</div>
+      </div>
+      <div class="lp-faq-item">
+        <div class="lp-faq-q">¿Hay cuota mensual o permanencia? <span>+</span></div>
+        <div class="lp-faq-a">No. Solo pagas los minutos que usas. Sin cuota fija, sin permanencia, sin sorpresas.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-footer-cta">
+    <h2>Tu primer viaje en menos de 5 minutos</h2>
+    <p>Descarga la app, regístrate y empieza hoy con 10€ de bienvenida</p>
+    <button class="lp-cta-btn">Descarga la app gratis</button>
+    <div class="lp-footer-note">App Store · Google Play · Sin permanencia</div>
+  </section>
+
+  <footer>
+    © 2025 Free2Move · Mockup estratégico · Máster en Marketing Digital · Universidad Villanueva
+  </footer>
+
+  <script>
+    const slider = document.getElementById('mins');
+    const minsOut = document.getElementById('mins-out');
+    const priceOut = document.getElementById('price-out');
+    slider.addEventListener('input', function() {
+      const v = parseInt(this.value);
+      minsOut.textContent = v + ' min';
+      const price = (v * 0.18).toFixed(2).replace('.', ',');
+      priceOut.textContent = price + '€';
+    });
+  </script>
+
+</body>
+</html>

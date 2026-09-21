@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free2Move | Urban Mobility Growth Strategy</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0f172a;
+      --card: rgba(255,255,255,.08);
+      --card-solid: #101827;
+      --stroke: rgba(255,255,255,.12);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --green: #22c55e;
+      --green-2: #34d399;
+      --blue: #60a5fa;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --shadow: 0 24px 60px rgba(0,0,0,.35);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(34,197,94,.22), transparent 34%),
+        radial-gradient(circle at top right, rgba(96,165,250,.16), transparent 28%),
+        linear-gradient(135deg, #07111f 0%, #0f172a 48%, #111827 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+    }
+
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 28px;
+      align-items: center;
+      padding: 28px 0 46px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      margin-bottom: 26px;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      background: rgba(7, 17, 31, .74);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.18);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .logo {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      box-shadow: 0 8px 22px rgba(34,197,94,.22);
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 999px;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,.08);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(52,211,153,.25);
+      border-radius: 999px;
+      background: rgba(34,197,94,.08);
+      color: #bbf7d0;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 92px);
+      line-height: .92;
+      letter-spacing: -.075em;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #fff 20%, #86efac 58%, #93c5fd 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 760px;
+      font-size: 20px;
+      color: #cbd5e1;
+      margin-bottom: 26px;
+    }
+
+    .hero-quote {
+      border-left: 4px solid var(--green);
+      padding: 18px 20px;
+      background: rgba(255,255,255,.06);
+      border-radius: 0 18px 18px 0;
+      color: #e2e8f0;
+      font-size: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      border: 1px solid var(--stroke);
+      border-radius: 32px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      padding: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -80px;
+      top: -80px;
+      background: radial-gradient(circle, rgba(34,197,94,.32), transparent 70%);
+    }
+
+    .phone {
+      position: relative;
+      margin: 0 auto;
+      width: min(300px, 100%);
+      aspect-ratio: 9 / 16;
+      border-radius: 38px;
+      border: 10px solid #020617;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(52,211,153,.24), transparent 32%),
+        linear-gradient(180deg, #111827, #020617);
+      padding: 22px;
+      box-shadow: 0 30px 70px rgba(0,0,0,.55);
+    }
+
+    .phone .bar {
+      width: 92px;
+      height: 6px;
+      background: rgba(255,255,255,.18);
+      border-radius: 999px;
+      margin: 0 auto 30px;
+    }
+
+    .phone-card {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .phone-card strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      color: white;
+    }
+
+    .phone-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 14px;
+      background: rgba(255,255,255,.08);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--green), var(--green-2));
+      color: #03120a;
+      border-color: transparent;
+    }
+
+    section {
+      scroll-margin-top: 90px;
+      margin: 36px 0;
+    }
+
+    h2 {
+      font-size: clamp(30px, 4vw, 46px);
+      letter-spacing: -.055em;
+      margin-bottom: 18px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 14px;
+      letter-spacing: -.02em;
+      color: #f8fafc;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.105), rgba(255,255,255,.055));
+      box-shadow: 0 18px 44px rgba(0,0,0,.18);
+      padding: 22px;
+      overflow: hidden;
+    }
+
+    .callout {
+      background: linear-gradient(135deg, rgba(34,197,94,.20), rgba(96,165,250,.12));
+      border-color: rgba(52,211,153,.28);
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .kpi {
+      border-radius: 18px;
+      background: rgba(15,23,42,.55);
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 14px;
+    }
+
+    .kpi .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .kpi .value {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+    }
+
+    .trend {
+      margin-top: 7px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .good, .ok { color: var(--green-2); }
+    .bad, .danger { color: var(--red); }
+    .neutral, .warn { color: var(--amber); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 16px;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 11px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      vertical-align: top;
+    }
+
+    th {
+      color: #cbd5e1;
+      background: rgba(255,255,255,.06);
+      text-align: left;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    td {
+      color: #e5e7eb;
+    }
+
+    tbody tr:hover {
+      background: rgba(255,255,255,.035);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      background: rgba(255,255,255,.08);
+      white-space: nowrap;
+    }
+
+    .status.ok { color: #bbf7d0; background: rgba(34,197,94,.13); }
+    .status.warn { color: #fde68a; background: rgba(245,158,11,.14); }
+    .status.danger { color: #fecaca; background: rgba(239,68,68,.14); }
+
+    .mini {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .list {
+      color: #dbeafe;
+    }
+
+    .li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: #dbeafe;
+    }
+
+    .li svg {
+      flex: 0 0 22px;
+      width: 22px;
+      height: 22px;
+      margin-top: 1px;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,.1);
+      margin: 18px 0;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(34,197,94,.1);
+      color: #dcfce7;
+      font-size: 14px;
+    }
+
+    .kpi-emph {
+      color: #86efac;
+    }
+
+    .progress {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      padding: 32px 0 8px;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .grid-2, .grid-3, .kpi-row {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        border-radius: 22px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav div:last-child {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: #0f172a;
+      }
+      .nav {
+        display: none;
+      }
+      .card, .hero-card {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo">🚗</div>
+        <span>Free2Move Growth Strategy</span>
+      </div>
+      <div>
+        <a href="#r1">Reto 1</a>
+        <a href="#r2">Reto 2</a>
+        <a href="#r3">Reto 3</a>
+        <a href="#kpi">KPIs</a>
+        <a href="#comite">Comité</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <div class="eyebrow">Inbound Marketing · SEO · Growth</div>
+        <h1><span>Free2Move</span><br/>Urban Mobility Growth Strategy</h1>
+        <p>Sistema de crecimiento digital para cerrar el gap entre demanda, captación y activación en Madrid.</p>
+        <div class="hero-quote">
+          “Free2Move no tiene problema de demanda. Tiene problema de captura y activación. La demanda existe en Google, pero Free2Move no la recibe. Y los usuarios que sí llegan no se activan.”
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="#r1">Ver diagnóstico</a>
+          <a class="btn" href="#kpi">Ver KPIs</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="phone">
+          <div class="bar"></div>
+          <div class="phone-card"><strong>13.9K</strong><span>tráfico orgánico</span></div>
+          <div class="phone-card"><strong>&lt;5%</strong><span>tráfico desde España</span></div>
+          <div class="phone-card"><strong>30s</strong><span>LCP móvil detectado</span></div>
+          <div class="phone-card"><strong>1er viaje</strong><span>North Star Metric</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section id="r1">
+  <h2>Reto 1 — Diagnóstico del sistema de crecimiento</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Datos de situación actual</h3>
+      <div class="kpi-row" style="margin-bottom:10px">
+        <div class="kpi">
+          <div class="label">Tráfico orgánico</div>
+          <div class="value">13.900</div>
+          <div class="trend bad">-5,2%</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Keywords posicionadas</div>
+          <div class="value">21.600</div>
+          <div class="trend neutral">fl -2,8%</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Tráfico desde España</div>
+          <div class="value">&lt;5%</div>
+          <div class="trend danger">Crítico</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Authority Score</div>
+          <div class="value">47 / 100</div>
+          <div class="trend good">Base sólida</div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Métrica</th><th>Valor</th><th>Tendencia</th><th>Lectura</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Backlinks</td><td>1,4M</td><td>—</td><td>Autoridad alta</td></tr>
+          <tr><td>Score Google Trends</td><td>23 / 100</td><td>—</td><td><span class="status warn">El más bajo del sector</span></td></tr>
+          <tr><td>Visibilidad IA generativa</td><td>558 menciones</td><td>—</td><td>ChatGPT, Gemini, Google AI</td></tr>
+        </tbody>
+      </table>
+      <div class="mini" style="margin-top:8px">Fuente: Semrush · Google Trends · SimilarWeb</div>
+    </div>
+    <div class="card">
+      <h3>Lectura clave</h3>
+      <div class="list">
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="#60a5fa" opacity=".6"/>
+            <path d="M7 12h10" stroke="#60a5fa" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div><b>El problema no está en atraer.</b> Está en activar. Muchos descargan, pocos completan registro o 1er viaje.</div>
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16M4 12h10M4 17h7" stroke="#34d399" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div>Fricciones: <b>registro largo</b>, <b>ansiedad operacional</b> (¿cómo abrir? ¿dónde aparcar?), <b>falta de incentivo</b> claro.</div>
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 3v18M3 12h18" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div>Mobile performance: LCP hasta <b>30s</b> (score 54). Impacta conversión en móvil.</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M5 12l4 4L19 6" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/></svg>
+        Objetivo diagnóstico: <b class="kpi-emph">Cerrar el gap Captura → Activación</b>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="r2">
+  <h2>Reto 2 — Estrategia SEO</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Google Trends — comparativa sectorial</h3>
+      <table>
+        <thead>
+          <tr><th>Término</th><th>Score</th><th>Posición</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Vehículo compartido</td><td>57</td><td>Más buscado</td></tr>
+          <tr><td>Wible</td><td>49</td><td>2º</td></tr>
+          <tr><td>Car sharing</td><td>41</td><td>3º</td></tr>
+          <tr><td>Voltio by Mutua</td><td>39</td><td>4º</td></tr>
+          <tr><td>Free2Move</td><td>23</td><td><span class="status danger">El más bajo — oportunidad crítica</span></td></tr>
+        </tbody>
+      </table>
+      <div class="mini" style="margin-top:8px">Fuente: Google Trends</div>
+    </div>
+    <div class="card">
+      <h3>Keyword research priorizado</h3>
+      <table>
+        <thead>
+          <tr><th>Keyword</th><th>Funnel</th><th>Intención</th><th>Prioridad</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>carsharing Madrid</td><td>MOFU</td><td>Comparativa</td><td><span class="status ok">Alta</span></td></tr>
+          <tr><td>vehículo compartido Madrid</td><td>MOFU</td><td>Comparativa</td><td><span class="status ok">Alta</span></td></tr>
+          <tr><td>alquiler coche por minutos Madrid</td><td>BOFU</td><td>Transaccional</td><td><span class="status ok">Alta</span></td></tr>
+          <tr><td>app carsharing Madrid</td><td>BOFU</td><td>Transaccional</td><td><span class="status ok">Alta</span></td></tr>
+          <tr><td>vehículo compartido por minutos</td><td>BOFU</td><td>Transaccional</td><td><span class="status ok">Alta</span></td></tr>
+          <tr><td>carsharing eléctrico Madrid</td><td>MOFU</td><td>Comparativa</td><td>Media</td></tr>
+          <tr><td>qué es el carsharing</td><td>TOFU</td><td>Informativa</td><td>Media</td></tr>
+          <tr><td>alternativa coche propio Madrid</td><td>TOFU</td><td>Informativa</td><td>Media</td></tr>
+        </tbody>
+      </table>
+      <div class="mini" style="margin-top:8px">Fuente: Semrush · Google Trends</div>
+    </div>
+  </div>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="card">
+      <h3>Auditoría SEO — fortalezas</h3>
+      <div class="list">
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="#22c55e" stroke-width="2"/></svg>
+          Authority Score <b>47</b> + <b>1,4M</b> backlinks
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#22c55e" stroke-width="2"/></svg>
+          Desktop técnico sólido (SEO ~85)
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18" stroke="#22c55e" stroke-width="2"/></svg>
+          558 menciones en IA generativa
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Problemas críticos</h3>
+      <div class="list">
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/></svg>
+          Dependencia total de tráfico branded
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="#ef4444" stroke-width="2"/></svg>
+          Mobile score 54 · LCP hasta 30s
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#ef4444" stroke-width="2"/></svg>
+          <5% del tráfico desde España (opera en Madrid)
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Mejoras prioritarias</h3>
+      <div class="list">
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16" stroke="#60a5fa" stroke-width="2"/></svg>
+          Landing local Madrid + keywords no-branded
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="#60a5fa" stroke-width="2"/></svg>
+          Optimización LCP <b>&lt; 2,5s</b>
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 7h10v10H7z" stroke="#60a5fa" stroke-width="2"/></svg>
+          Contenido TOFU/MOFU + ASO App Store
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>Página SEO principal — arquitectura</h3>
+    <table>
+      <tbody>
+        <tr><td><b>Keyword principal</b></td><td>carsharing Madrid / vehículo compartido Madrid</td></tr>
+        <tr><td><b>Title</b></td><td>Carsharing en Madrid por minutos · Free2Move</td></tr>
+        <tr><td><b>Meta description</b></td><td>Muévete por Madrid sin coche propio. Alquila por minutos, sin parking ni mantenimiento. Descarga Free2Move y empieza hoy con 10 euros de bienvenida.</td></tr>
+        <tr><td><b>H1</b></td><td>Carsharing en Madrid: movilidad flexible cuando la necesitas</td></tr>
+        <tr><td><b>H2</b></td><td>¿Cómo funciona en Madrid? · Comparativa vs taxi/TP · Zonas disponibles · Tu primer viaje en menos de 5 min · FAQs</td></tr>
+        <tr><td><b>CTA</b></td><td><span class="status ok">Descarga la app y consigue 10€ en tu primer trayecto</span></td></tr>
+      </tbody>
+    </table>
+    <div class="divider"></div>
+    <div class="grid-3">
+      <div>
+        <div class="mini">Off-page</div>
+        <div class="list" style="margin-top:8px">
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><path d="M8 12l3 3 6-6" stroke="#34d399" stroke-width="2"/></svg>Comparadores: kelisto, autobild, blogs de movilidad</div>
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4l3 6h6l-4.5 3.5L18 20l-6-3.5L6 20l1.5-6.5L3 10h6z" stroke="#34d399" stroke-width="1.6"/></svg>Backlinks editoriales</div>
+        </div>
+      </div>
+      <div>
+        <div class="mini">Google Business Profile</div>
+        <div class="list" style="margin-top:8px">
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16v10H4z" stroke="#60a5fa" stroke-width="2"/></svg>Optimización local para Madrid</div>
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8" stroke="#60a5fa" stroke-width="2"/></svg>Visibilidad gratuita en mapas</div>
+        </div>
+      </div>
+      <div>
+        <div class="mini">ASO (App Store)</div>
+        <div class="list" style="margin-top:8px">
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="5" width="12" height="14" rx="2" stroke="#f59e0b" stroke-width="2"/></svg>Screenshots: abrir coche en 3 pasos</div>
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="#f59e0b" stroke-width="2"/></svg>Descripción con keywords en castellano</div>
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16" stroke="#f59e0b" stroke-width="2"/></svg>Respuestas a reviews negativas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="r3">
+  <h2>Reto 3 — Conversión, activación y automatización</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Flujo completo</h3>
+      <table>
+        <thead><tr><th>Paso</th><th>Etapa</th><th>Detalle</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Búsqueda</td><td>“carsharing Madrid” — intención transaccional</td></tr>
+          <tr><td>2</td><td>Landing SEO</td><td>Incentivo 10€ visible · simulador tarifa · reviews reales</td></tr>
+          <tr><td>3</td><td>CTA</td><td>Después de convencer — no al entrar</td></tr>
+          <tr><td>4</td><td>App Store</td><td>ASO optimizado · screenshots del proceso</td></tr>
+          <tr><td>5</td><td>Registro</td><td>Simplificado 3 pasos · login Google/Apple · progreso</td></tr>
+          <tr><td>6</td><td>Tutorial</td><td>Abrir coche · dónde aparcar · coste en tiempo real</td></tr>
+          <tr><td><b>H</b></td><td><b>Primer viaje</b></td><td><span class="status ok">Momento clave — inicio del LTV</span></td></tr>
+          <tr><td>7</td><td>Retención</td><td>Lifecycle automatizado — retención y recomendación</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Fricciones y soluciones</h3>
+      <table>
+        <thead><tr><th>Momento</th><th>Fricción</th><th>Solución</th></tr></thead>
+        <tbody>
+          <tr><td>Landing → Descarga</td><td>Web tarda 30s en móvil</td><td><b>Optimizar LCP &lt; 2,5s</b></td></tr>
+          <tr><td>Descarga → Registro</td><td>Proceso largo</td><td>Onboarding 3 pasos + login social</td></tr>
+          <tr><td>Registro → Primer uso</td><td>Ansiedad operacional</td><td>Tutorial visual 3 pasos</td></tr>
+          <tr><td>Evaluación</td><td>No sé el precio</td><td>Simulador de tarifa en landing</td></tr>
+          <tr><td>Durante viaje</td><td>Miedo a coste</td><td>Coste visible en tiempo real + soporte</td></tr>
+          <tr><td>Post viaje</td><td>No es hábito</td><td>Push contextual inteligente</td></tr>
+        </tbody>
+      </table>
+      <div class="mini" style="margin-top:8px">Fuente: PageSpeed Insights · UX del funnel</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>Automatizaciones lifecycle</h3>
+    <table>
+      <thead><tr><th>Trigger</th><th>Mensaje</th><th>Canal</th><th>Objetivo</th></tr></thead>
+      <tbody>
+        <tr><td>Descarga sin registro (2h)</td><td>“Te falta un paso. Completa tu registro y llévate 10€.”</td><td>Push + Email</td><td>Activación</td></tr>
+        <tr><td>Registro sin uso (24h)</td><td>“Tu primer trayecto tiene 10€. Hay coches cerca.”</td><td>Push</td><td>Activación</td></tr>
+        <tr><td>Abre app pero no reserva</td><td>“¿Tienes dudas? Así se abre un coche en 3 pasos.”</td><td>In-app</td><td>Reducir ansiedad</td></tr>
+        <tr><td>Primer viaje completado</td><td>“¿Qué te ha parecido? Tu opinión nos importa.”</td><td>In-app</td><td>Review + retención</td></tr>
+        <tr><td>7 días sin uso</td><td>“Llueve. Hay coches cerca. Vuelve cuando lo necesites.”</td><td>Push contextual</td><td>Retención</td></tr>
+        <tr><td>30 días sin uso</td><td>“Te echamos de menos. Vuelve con 5€ de regalo.”</td><td>Email</td><td>Reactivación</td></tr>
+      </tbody>
+    </table>
+    <div class="divider"></div>
+    <div class="grid-2">
+      <div>
+        <h3>Para que vuelva</h3>
+        <div class="list">
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16" stroke="#34d399" stroke-width="2"/></svg>Push contextual (lluvia, huelga, puentes, fines de semana)</div>
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4v16" stroke="#34d399" stroke-width="2"/></svg>Descuentos escalonados desde 3er viaje</div>
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="5" width="14" height="14" rx="3" stroke="#34d399" stroke-width="2"/></svg>Campañas estacionales (Navidad, verano, Black Friday)</div>
+        </div>
+      </div>
+      <div>
+        <h3>Para que recomiende</h3>
+        <div class="list">
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="#60a5fa" stroke-width="2"/></svg>Solicitud de review automática post 1er viaje</div>
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><path d="M12 6l6 6-6 6" stroke="#60a5fa" stroke-width="2"/></svg>Programa de referidos activado en 3er uso</div>
+          <div class="li"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="6" stroke="#60a5fa" stroke-width="2"/></svg>“Invita a un amigo y consigue minutos gratis”</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="kpi">
+  <h2>KPIs — métricas por fase</h2>
+  <div class="grid-3">
+    <div class="card">
+      <h3>SEO</h3>
+      <div class="list">
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 18l6-6 4 4 6-8" stroke="#22c55e" stroke-width="2"/></svg>
+          Tráfico orgánico <b>no-branded</b> desde España
+        </div>
+        <div class="progress" style="margin-top:8px"><span style="width:20%"></span></div>
+        <div class="mini">13.900 → <b>16.680 visitas/mes</b> · +20% en 12 meses</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Conversión</h3>
+      <div class="list">
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 12h12" stroke="#f59e0b" stroke-width="2"/></svg>
+          CVR web → descarga: <b>2,5%</b>
+        </div>
+        <div class="progress" style="margin-top:8px"><span style="width:25%"></span></div>
+        <div class="mini">CVR install → 1er viaje: <b>15%</b> · benchmark movilidad España</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Activación</h3>
+      <div class="list">
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v6M12 21v-6" stroke="#34d399" stroke-width="2"/></svg>
+          % usuarios con <b>primer viaje en ≤7 días</b>
+        </div>
+        <div class="progress" style="margin-top:8px"><span style="width:22%"></span></div>
+        <div class="mini"><b>North Star KPI</b> · de 52 a 210 activaciones/mes</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="card">
+      <h3>Retención</h3>
+      <div class="list">
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M19 7l-7 7-4-4" stroke="#60a5fa" stroke-width="2"/></svg>
+          % usuarios activos a 30 días
+        </div>
+        <div class="progress" style="margin-top:8px"><span style="width:40%"></span></div>
+        <div class="mini">Lifecycle automatizado · 6 flujos push + email</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Recomendación</h3>
+      <div class="list">
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M8 12l3 3 5-6" stroke="#60a5fa" stroke-width="2"/></svg>
+          Tasa de referidos activados + reseñas nuevas
+        </div>
+        <div class="progress" style="margin-top:8px"><span style="width:18%"></span></div>
+        <div class="mini">Programa referidos activo desde 3er uso</div>
+      </div>
+    </div>
+    <div class="card callout">
+      <h3>North Star Metric</h3>
+      <div>Usuarios que realizan su <b>primer viaje en ≤7 días</b> desde la descarga.<br/><br/>Hoy: <b>~52/mes</b> → Mes 12: <b>~210/mes</b> → Año 2: <b>300/mes</b></div>
+    </div>
+  </div>
+</section>
+<section id="comite">
+  <h2>Petición al Comité — 30.000 € para multiplicar por 4 las activaciones</h2>
+  <div class="grid-2">
+    <div class="card">
+      <table>
+        <thead><tr><th>Partida</th><th>Para qué</th><th>Importe</th><th>%</th><th>Prioridad</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Agencia SEO</td><td>Landing Madrid + contenido + off-page · 12 meses</td><td><b>14.400 €</b></td>
+            <td><b>48%</b><div style="background:#e5e7eb;border-radius:3px;height:4px;margin-top:3px;overflow:hidden"><div style="width:48%;height:100%;background:#60a5fa;border-radius:3px"></div></div></td>
+            <td><span class="status ok">Alta</span></td>
+          </tr>
+          <tr>
+            <td>Incentivos activación</td><td>10€ por primer viaje · variable con resultados</td><td><b>10.500 €</b></td>
+            <td><b>35%</b><div style="background:#e5e7eb;border-radius:3px;height:4px;margin-top:3px;overflow:hidden"><div style="width:35%;height:100%;background:#f59e0b;border-radius:3px"></div></div></td>
+            <td><span class="status ok">Alta</span></td>
+          </tr>
+          <tr>
+            <td>Optimización LCP</td><td>Bajar carga mobile de 30s a &lt;2,5s</td><td><b>3.000 €</b></td>
+            <td><b>10%</b><div style="background:#e5e7eb;border-radius:3px;height:4px;margin-top:3px;overflow:hidden"><div style="width:10%;height:100%;background:#ef4444;border-radius:3px"></div></div></td>
+            <td><span class="status danger">Urgente</span></td>
+          </tr>
+          <tr>
+            <td>Klaviyo lifecycle</td><td>Email + push automatizado · 12 meses</td><td><b>2.100 €</b></td>
+            <td><b>7%</b><div style="background:#e5e7eb;border-radius:3px;height:4px;margin-top:3px;overflow:hidden"><div style="width:7%;height:100%;background:#34d399;border-radius:3px"></div></div></td>
+            <td><span class="status ok">Alta</span></td>
+          </tr>
+          <tr style="font-weight:600"><td>Total</td><td></td><td><b>30.000 €</b></td><td><b>100%</b></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Retorno esperado</h3>
+      <div class="list" style="gap:10px">
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="#22c55e" stroke-width="2"/></svg>
+          <div><b>1.260 usuarios activados</b> en el año · media de 105/mes</div>
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="#22c55e" stroke-width="2"/></svg>
+          <div>LTV por usuario: <b>150 €</b> · 4,7 viajes/mes × 4€ × 8 meses de retención</div>
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="#22c55e" stroke-width="2"/></svg>
+          <div>Ingresos generados año 1: <b>~189.000 €</b></div>
+        </div>
+        <div class="li">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 18l6-6 4 4 6-8" stroke="#34d399" stroke-width="2"/></svg>
+          <div>ROI: <b>+542%</b> · cada euro invertido genera 5,4 € de retorno</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="pill">
+        <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M5 12l4 4L19 6" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/></svg>
+        CAC: <b>23 € por activación</b> · se recupera en menos de 2 meses de uso
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  Fuentes: Semrush · Google Trends · SimilarWeb · PageSpeed Insights · II Barómetro AVCE 2024 · AppTweak 2025 · Klaviyo Pricing 2024 · Análisis propio del funnel
+</footer>
+  </div>
+</body>
+</html>
