@@ -591,7 +591,7 @@ class Component extends DCLogic {
       docEmbeddable: !!(d && d.src && !d.external),
       docIsPdf: !!(d && d.src && d.pdf),
       docEmbedSrc: d && d.src && !d.external
-        ? (d.pdf ? RES(d.rid, d.src) + '#view=FitH&navpanes=0' : RES(d.rid, d.src))
+        ? (d.pdf ? d.src + '#view=FitH&navpanes=0' : RES(d.rid, d.src))
         : ''
     };
   }
